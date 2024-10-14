@@ -2,10 +2,12 @@ package com.adrian.champlonshipfootball.service;
 
 import com.adrian.champlonshipfootball.model.Player;
 import com.adrian.champlonshipfootball.repository.PlayerRepository;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class PlayerService {
-    PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
     public PlayerService(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }

@@ -9,8 +9,8 @@ public class Goal {
     @GeneratedValue
     @Column(name = "goals_id", nullable = false)
     private long goalId;
-    @JoinColumn(name = "match_id",  referencedColumnName = "match_id", nullable = false)
     @ManyToOne
+    @JoinColumn(name = "match_id",  referencedColumnName = "match_id", nullable = false)
     private Match match;
     @ManyToOne
     @JoinColumn(name = "player_id", referencedColumnName = "player_id", nullable = false)

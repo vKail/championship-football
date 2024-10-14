@@ -5,11 +5,12 @@ import com.adrian.champlonshipfootball.model.Match;
 import com.adrian.champlonshipfootball.model.Season;
 import com.adrian.champlonshipfootball.model.Team;
 import com.adrian.champlonshipfootball.repository.LeaderboardRepository;
-
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class LeaderboardService {
-    LeaderboardRepository leaderboardRepository;
+    private final LeaderboardRepository leaderboardRepository;
     public LeaderboardService(LeaderboardRepository leaderboardRepository) {
         this.leaderboardRepository = leaderboardRepository;
 

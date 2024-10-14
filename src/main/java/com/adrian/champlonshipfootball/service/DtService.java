@@ -2,15 +2,16 @@ package com.adrian.champlonshipfootball.service;
 
 import com.adrian.champlonshipfootball.model.Dt;
 import com.adrian.champlonshipfootball.repository.DtRepository;
-
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class DtService {
-    DtRepository dtRepository;
+    private final DtRepository dtRepository;
     public DtService(DtRepository dtRepository) {
         this.dtRepository = dtRepository;
     }
-    public List<Dt> findAllDt() {
+    public List<Dt> findAllDts() {
         return dtRepository.findAll();
     }
     public Dt saveDt(Dt dt) {

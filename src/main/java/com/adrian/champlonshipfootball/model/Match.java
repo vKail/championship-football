@@ -18,6 +18,9 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
     private Category category;
+    @OneToOne
+    @JoinColumn(name = "season_id", referencedColumnName = "season_id", nullable = false)
+    private Season season;
 //    @ManyToOne
 //    @JoinColumn(name = "users_id", referencedColumnName = "users_id", nullable = false)
 //    private Users usersId;
@@ -25,16 +28,20 @@ public class Match {
     private Date matchDate;
     @Column(name = "result")
     private String result;
+    @Column(name = "status")
+    private String status;
 
     public Match() {}
 
-    public Match(long matchId, Team homeTeam, Team awayTeam, Category category, Date matchDate, String result) {
+    public Match(long matchId, Team homeTeam, Team awayTeam, Category category, Date matchDate, String result, String status, Season season) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.category = category;
         this.matchDate = matchDate;
         this.result = result;
+        this.status = status;
+        this.season = season;
     }
 
     public long getMatchId() {
@@ -83,5 +90,21 @@ public class Match {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
     }
 }

@@ -19,6 +19,9 @@ public class GoalService {
     public Goal getGoalById(long id) {
         return goalRepository.findById(id).orElse(null);
     }
+    public List<Goal> getGoalByMatch(long id) {
+        return goalRepository.findGoalByMatch(id);
+    }
     public Goal updateGoal(long id,Goal goal) {
         Goal goalToUpdate = getGoalById(id);
         goalToUpdate.setPlayer(goal.getPlayer());

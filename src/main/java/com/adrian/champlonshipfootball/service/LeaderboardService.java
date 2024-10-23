@@ -5,50 +5,62 @@ import com.adrian.champlonshipfootball.model.Match;
 import com.adrian.champlonshipfootball.model.Season;
 import com.adrian.champlonshipfootball.model.Team;
 import com.adrian.champlonshipfootball.repository.LeaderboardRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class LeaderboardService {
-    LeaderboardRepository leaderboardRepository;
+    private final LeaderboardRepository leaderboardRepository;
+
     public LeaderboardService(LeaderboardRepository leaderboardRepository) {
         this.leaderboardRepository = leaderboardRepository;
-
     }
+
     public Leaderboard saveLeaderboard(Leaderboard leaderboard) {
         return leaderboardRepository.save(leaderboard);
     }
-    public List<Leaderboard> findAllLeaderboard() {
+
+    public List<Leaderboard> findAllLeaderboards() {
         return leaderboardRepository.findAll();
     }
+
     public Leaderboard findLeaderboardById(long id) {
         return leaderboardRepository.findById(id).orElse(null);
     }
+
     public Leaderboard findByTeamAndSeason(Team team, Season season) {
         return leaderboardRepository.findByTeamAndSeason(team, season);
     }
-    public void updateStatusTeam(Match match, Season season) {
-        Leaderboard updatedHomeTeam = findByTeamAndSeason(match.getHomeTeam(), season);
-        Leaderboard updatedAwayTeam = findByTeamAndSeason(match.getAwayTeam(), season);
-        if (!match.getStatus().equalsIgnoreCase("Finalizado")) return ;
-        updatedHomeTeam.setGoalsScored(updatedHomeTeam.getGoalsScored() + Integer.parseInt(match.getResult().split("-")[0]));
-        updatedAwayTeam.setGoalsScored(updatedAwayTeam.getGoalsScored() + Integer.parseInt(match.getResult().split("-")[1]));
-        if (Integer.parseInt(match.getResult().split("-")[0]) > Integer.parseInt(match.getResult().split("-")[1])) {
-            updatedHomeTeam.setMatchesWon(updatedHomeTeam.getMatchesWon() + 1);
-            updatedHomeTeam.setPoints(updatedHomeTeam.getPoints() + 3);
-        } else if (Integer.parseInt(match.getResult().split("-")[0]) < Integer.parseInt(match.getResult().split("-")[1])) {
-            updatedHomeTeam.setMatchesLost(updatedHomeTeam.getMatchesLost() + 1);
-            updatedAwayTeam.setMatchesWon(updatedAwayTeam.getMatchesWon() + 1);
-            updatedAwayTeam.setPoints(updatedAwayTeam.getPoints() + 3);
+
+    public void updateLeaderboardAfterMatch(Match match) {
+        Leaderboard homeTeamLeaderboard = findByTeamAndSeason(match.getHomeTeam(), match.getSeason());
+        Leaderboard awayTeamLeaderboard = findByTeamAndSeason(match.getAwayTeam(), match.getSeason());
+
+        String[] result = match.getResult().split(" - ");
+        int homeGoals = Integer.parseInt(result[0]);
+        int awayGoals = Integer.parseInt(result[1]);
+
+        homeTeamLeaderboard.setGoalsScored(homeTeamLeaderboard.getGoalsScored() + homeGoals);
+        awayTeamLeaderboard.setGoalsScored(awayTeamLeaderboard.getGoalsScored() + awayGoals);
+
+        if (homeGoals > awayGoals) {
+            homeTeamLeaderboard.setMatchesWon(homeTeamLeaderboard.getMatchesWon() + 1);
+            homeTeamLeaderboard.setPoints(homeTeamLeaderboard.getPoints() + 3);
+            awayTeamLeaderboard.setMatchesLost(awayTeamLeaderboard.getMatchesLost() + 1);
+        } else if (homeGoals < awayGoals) {
+            awayTeamLeaderboard.setMatchesWon(awayTeamLeaderboard.getMatchesWon() + 1);
+            awayTeamLeaderboard.setPoints(awayTeamLeaderboard.getPoints() + 3);
+            homeTeamLeaderboard.setMatchesLost(homeTeamLeaderboard.getMatchesLost() + 1);
         } else {
-            updatedHomeTeam.setMatchesDrawn(updatedHomeTeam.getMatchesDrawn() + 1);
-            updatedAwayTeam.setMatchesDrawn(updatedAwayTeam.getMatchesDrawn() + 1);
-            updatedHomeTeam.setPoints(updatedHomeTeam.getPoints() + 1);
-            updatedAwayTeam.setPoints(updatedAwayTeam.getPoints() + 1);
-
+            homeTeamLeaderboard.setMatchesDrawn(homeTeamLeaderboard.getMatchesDrawn() + 1);
+            awayTeamLeaderboard.setMatchesDrawn(awayTeamLeaderboard.getMatchesDrawn() + 1);
+            homeTeamLeaderboard.setPoints(homeTeamLeaderboard.getPoints() + 1);
+            awayTeamLeaderboard.setPoints(awayTeamLeaderboard.getPoints() + 1);
         }
-        leaderboardRepository.save(updatedHomeTeam);
-        leaderboardRepository.save(updatedAwayTeam);
 
+        leaderboardRepository.save(homeTeamLeaderboard);
+        leaderboardRepository.save(awayTeamLeaderboard);
     }
 
     public void deleteLeaderboard(long id) {

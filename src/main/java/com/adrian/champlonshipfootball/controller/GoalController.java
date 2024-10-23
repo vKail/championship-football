@@ -15,27 +15,48 @@ public class GoalController {
     }
 
     @GetMapping("/goals")
-    public List<Goal> getGoals() {
-        return goalService.findAllGoals();
+    public List<Goal> getGoals() throws Exception {
+        try {
+            return goalService.findAllGoals();
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @GetMapping("/goals/{id}")
-    public Goal getGoalById(@PathVariable Long id) {
-        return goalService.findGoalById(id);
+    public Goal getGoalById(@PathVariable Long id) throws Exception {
+        try {
+            return goalService.findGoalById(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PostMapping("/goals")
-    public Goal saveGoal(@RequestBody Goal goal) {
-        return goalService.saveGoal(goal);
+    public Goal saveGoal(@RequestBody Goal goal) throws Exception {
+        try {
+            return goalService.saveGoal(goal);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/goals/{id}")
-    public Goal updateGoal(@PathVariable Long id, @RequestBody Goal goal) {
-        return goalService.updateGoal(id, goal);
+    public Goal updateGoal(@PathVariable Long id, @RequestBody Goal goal) throws Exception {
+        try {
+            return goalService.updateGoal(id, goal);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/goals/{id}")
-    public void deleteGoal(@PathVariable Long id) {
-        goalService.deleteGoal(id);
+    public void deleteGoal(@PathVariable Long id) throws Exception {
+        try {
+            goalService.deleteGoal(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
+
 }

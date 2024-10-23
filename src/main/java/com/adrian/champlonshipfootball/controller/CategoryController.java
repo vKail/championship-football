@@ -16,27 +16,47 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public List<Category> getCategories() {
-        return categoryService.findAllCategories();
+    public List<Category> getCategories() throws Exception {
+        try {
+            return categoryService.findAllCategories();
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @GetMapping("/categories/{id}")
-    public Category getCategoryById(@PathVariable Long id) {
-        return categoryService.findCategoryById(id);
+    public Category getCategoryById(@PathVariable Long id) throws Exception {
+        try {
+            return categoryService.findCategoryById(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PostMapping("/categories")
-    public Category saveCategory(@Param("category") Category category) {
-        return categoryService.saveCategory(category);
+    public Category saveCategory(@RequestBody Category category) throws Exception {
+        try {
+            return categoryService.saveCategory(category);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/categories/{id}")
-    public Category updateCategory(@PathVariable Long id, @Param("category") Category category) {
-        return categoryService.updateCategory(id, category);
+    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) throws Exception {
+        try {
+            return categoryService.updateCategory(id, category);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/categories/{id}")
-    public void deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
+    public void deleteCategory(@PathVariable Long id) throws Exception {
+        try {
+            categoryService.deleteCategory(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 }

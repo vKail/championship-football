@@ -15,27 +15,47 @@ public class TeamController {
     }
 
     @GetMapping("/teams")
-    public List<Team> getTeams() {
-        return teamService.findAllTeams();
+    public List<Team> getTeams() throws Exception {
+        try {
+            return teamService.findAllTeams();
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @GetMapping("/teams/{id}")
-    public Team getTeamById(@PathVariable Long id) {
-        return teamService.findTeamById(id);
+    public Team getTeamById(@PathVariable Long id) throws Exception {
+        try {
+            return teamService.findTeamById(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PostMapping("/teams")
-    public Team saveTeam(@RequestBody Team team) {
-        return teamService.saveTeam( team);
+    public Team saveTeam(@RequestBody Team team) throws Exception {
+        try {
+            return teamService.saveTeam(team);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/teams/{id}")
-    public Team updateTeam(@PathVariable Long id, @RequestBody Team team) {
-        return teamService.updateTeam(id, team);
+    public Team updateTeam(@PathVariable Long id, @RequestBody Team team) throws Exception {
+        try {
+            return teamService.updateTeam(id, team);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/teams/{id}")
-    public void deleteTeam(@PathVariable Long id) {
-        teamService.deleteTeam(id);
+    public void deleteTeam(@PathVariable Long id) throws Exception {
+        try {
+            teamService.deleteTeam(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 }

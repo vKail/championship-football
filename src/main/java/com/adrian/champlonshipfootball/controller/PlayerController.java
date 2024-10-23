@@ -15,28 +15,48 @@ public class PlayerController {
     }
 
     @GetMapping("/players")
-    public List<Player> getPlayers() {
-        return playerService.findAllPlayers();
+    public List<Player> getPlayers() throws Exception {
+        try {
+            return playerService.findAllPlayers();
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @GetMapping("/players/{id}")
-    public Player getPlayerById(@PathVariable Long id) {
-        return playerService.findPlayerById(id);
+    public Player getPlayerById(@PathVariable Long id) throws Exception {
+        try {
+            return playerService.findPlayerById(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PostMapping("/players")
-    public Player savePlayer(@RequestBody Player player) {
-        return playerService.savePlayer(player);
+    public Player savePlayer(@RequestBody Player player) throws Exception {
+        try {
+            return playerService.savePlayer(player);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/players/{id}")
-    public Player updatePlayer(@PathVariable Long id, @RequestBody Player player) {
-        return playerService.updatePlayer(id, player);
+    public Player updatePlayer(@PathVariable Long id, @RequestBody Player player) throws Exception {
+        try {
+            return playerService.updatePlayer(id, player);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/players/{id}")
-    public void deletePlayer(@PathVariable Long id) {
-        playerService.deletePlayer(id);
+    public void deletePlayer(@PathVariable Long id) throws Exception {
+        try {
+            playerService.deletePlayer(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
 }

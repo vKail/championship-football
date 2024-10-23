@@ -16,24 +16,49 @@ public class UserController {
 
 
     @GetMapping("/users")
-    public List<Users> getUsers() {
-        return userService.findAllUsers();
+    public List<Users> getUsers() throws Exception {
+        try {
+            return userService.findAllUsers();
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+
+        }
     }
+
     @GetMapping("/users/{id}")
-    public Users getUserById(@PathVariable Long id) {
-        return userService.findUserById(id);
+    public Users getUserById(@PathVariable Long id) throws Exception {
+        try {
+            return userService.findUserById(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
-    @PutMapping("/users/{id}")
-    public Users updateUser(@PathVariable  Long id, @RequestBody Users user) {
-        return userService.update(id, user);
-    }
+
     @PostMapping("/users")
-    public Users saveUser(@RequestBody Users user) {
-        return userService.saveUser(user);
+    public Users saveUser(@RequestBody Users user) throws Exception {
+        try {
+            return userService.saveUser(user);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
+
+    @PutMapping("/users/{id}")
+    public Users updateUser(@PathVariable Long id, @RequestBody Users user) throws Exception {
+        try {
+            return userService.update(id, user);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
+    }
+
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public void deleteUser(@PathVariable Long id) throws Exception {
+        try {
+            userService.deleteUser(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
 }

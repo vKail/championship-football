@@ -15,27 +15,47 @@ public class DtController {
     }
 
     @GetMapping("/dts")
-    public List<Dt> getDts() {
-        return dtService.findAllDts();
+    public List<Dt> getDts() throws Exception {
+        try {
+            return dtService.findAllDts();
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @GetMapping("/dts/{id}")
-    public Dt getDtById(@PathVariable Long id) {
-        return dtService.findDtById(id);
+    public Dt getDtById(@PathVariable Long id) throws Exception {
+        try {
+            return dtService.findDtById(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PostMapping("/dts")
-    public Dt saveDt(@RequestBody Dt dt) {
-        return dtService.saveDt(dt);
+    public Dt saveDt(@RequestBody Dt dt) throws Exception {
+        try {
+            return dtService.saveDt(dt);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/dts/{id}")
-    public Dt updateDt(@PathVariable Long id, @RequestBody Dt dt) {
-        return dtService.updateDt(id, dt);
+    public Dt updateDt(@PathVariable Long id, @RequestBody Dt dt) throws Exception {
+        try {
+            return dtService.updateDt(id, dt);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/dts/{id}")
-    public void deleteDt(@PathVariable Long id) {
-        dtService.deleteDt(id);
+    public void deleteDt(@PathVariable Long id) throws Exception {
+        try {
+            dtService.deleteDt(id);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
     }
 }

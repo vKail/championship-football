@@ -2,6 +2,9 @@ package com.adrian.champlonshipfootball.controller;
 
 import com.adrian.champlonshipfootball.model.Users;
 import com.adrian.champlonshipfootball.service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,6 +62,16 @@ public class UserController {
         } catch (Exception e) {
             throw new Exception("Error: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<Users> authenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Users currentUser = (Users) authentication.getPrincipal();
+
+        return ResponseEntity.ok(currentUser);
+
     }
 
 }

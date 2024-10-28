@@ -1,5 +1,6 @@
 package com.adrian.champlonshipfootball.model;
 
+import com.adrian.champlonshipfootball.enums.UserRoles;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="Users")
@@ -21,6 +23,8 @@ public class Users implements UserDetails {
     private String firstname;
     @Column(name = "lastname")
     private String lastname;
+    @Column(name = "role")
+    private UserRoles role;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -30,16 +34,9 @@ public class Users implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+
     public Users() {}
 
-    public Users(String dni, long userId, String firstname, String lastname, String username, String password) {
-        this.dni = dni;
-        this.userId = userId;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
-        this.password = password;
-    }
 
     public String getDni() {
         return dni;
@@ -100,6 +97,20 @@ public class Users implements UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public UserRoles getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        if (Objects.equals(role, UserRoles.ADMIN.toString())) {
+            this.role = UserRoles.ADMIN;
+        } else if (Objects.equals(role, UserRoles.USER.toString())) {
+            this.role = UserRoles.USER;
+        } else {
+            throw new IllegalArgumentException("Invalid role: " + role);
+        }
     }
 
     @Override

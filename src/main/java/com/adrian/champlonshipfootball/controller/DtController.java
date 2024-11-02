@@ -1,5 +1,6 @@
 package com.adrian.champlonshipfootball.controller;
 
+import com.adrian.champlonshipfootball.dtos.DtDto;
 import com.adrian.champlonshipfootball.model.Dt;
 import com.adrian.champlonshipfootball.service.DtService;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class DtController {
     }
 
     @GetMapping("/dts")
-    public List<Dt> getDts() throws Exception {
+    public List<DtDto> getDts() throws Exception {
         try {
             return dtService.findAllDts();
         } catch (Exception e) {
@@ -24,7 +25,7 @@ public class DtController {
     }
 
     @GetMapping("/dts/{id}")
-    public Dt getDtById(@PathVariable Long id) throws Exception {
+    public DtDto getDtById(@PathVariable Long id) throws Exception {
         try {
             return dtService.findDtById(id);
         } catch (Exception e) {
@@ -33,7 +34,7 @@ public class DtController {
     }
 
     @PostMapping("/dts")
-    public Dt saveDt(@RequestBody Dt dt) throws Exception {
+    public DtDto saveDt(@RequestBody DtDto dt) throws Exception {
         try {
             return dtService.saveDt(dt);
         } catch (Exception e) {
@@ -42,7 +43,7 @@ public class DtController {
     }
 
     @PutMapping("/dts/{id}")
-    public Dt updateDt(@PathVariable Long id, @RequestBody Dt dt) throws Exception {
+    public DtDto updateDt(@PathVariable Long id, @RequestBody DtDto dt) throws Exception {
         try {
             return dtService.updateDt(id, dt);
         } catch (Exception e) {

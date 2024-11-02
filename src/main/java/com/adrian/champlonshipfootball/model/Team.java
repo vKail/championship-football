@@ -1,5 +1,6 @@
 package com.adrian.champlonshipfootball.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -11,15 +12,16 @@ import java.util.Set;
 public class Team {
     @Id
     @GeneratedValue
-    @Column(name = "team_id")
+    @Column(name = "team_id" , nullable = false)
     private long teamId;
-    @Column(name = "name")
+    @Column(name = "name" , nullable = false)
     private String name;
-    @OneToMany(mappedBy = "team")
-    private List<Player> player;
-    @OneToOne
-    @JoinColumn(name = "dt_id", referencedColumnName = "dt_id", nullable = false)
-    private Dt dt;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "team" )
+    private Set<Player> player;
+//    @OneToOne
+//    @JoinColumn(name = "dt_id", referencedColumnName = "dt_id", nullable = false)
+//    private Dt dt;
     @ManyToMany
     @JoinTable(
             name = "team_categories",
@@ -31,13 +33,7 @@ public class Team {
     public Team() {
     }
 
-    public Team(long teamId, String name, List<Player> player, Dt dt, Set<Category> categories) {
-        this.teamId = teamId;
-        this.name = name;
-        this.player = player;
-        this.dt = dt;
-        this.categories = categories;
-    }
+
 
     public long getTeamId() {
         return teamId;
@@ -55,21 +51,21 @@ public class Team {
         this.name = name;
     }
 
-    public List<Player> getPlayer() {
+    public Set<Player> getPlayer() {
         return player;
     }
 
-    public void setPlayer(List<Player> player) {
+    public void setPlayer(Set<Player> player) {
         this.player = player;
     }
 
-    public Dt getDt() {
-        return dt;
-    }
-
-    public void setDt(Dt dt) {
-        this.dt = dt;
-    }
+//    public Dt getDt() {
+//        return dt;
+//    }
+//
+//    public void setDt(Dt dt) {
+//        this.dt = dt;
+//    }
 
     public Set<Category> getCategories() {
         return categories;

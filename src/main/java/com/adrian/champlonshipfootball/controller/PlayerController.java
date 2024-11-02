@@ -1,5 +1,6 @@
 package com.adrian.champlonshipfootball.controller;
 
+import com.adrian.champlonshipfootball.dtos.PlayerDto;
 import com.adrian.champlonshipfootball.model.Player;
 import com.adrian.champlonshipfootball.service.PlayerService;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class PlayerController {
     }
 
     @GetMapping("/players")
-    public List<Player> getPlayers() throws Exception {
+    public List<PlayerDto> getPlayers() throws Exception {
         try {
             return playerService.findAllPlayers();
         } catch (Exception e) {
@@ -24,7 +25,7 @@ public class PlayerController {
     }
 
     @GetMapping("/players/{id}")
-    public Player getPlayerById(@PathVariable Long id) throws Exception {
+    public PlayerDto getPlayerById(@PathVariable Long id) throws Exception {
         try {
             return playerService.findPlayerById(id);
         } catch (Exception e) {
@@ -33,7 +34,7 @@ public class PlayerController {
     }
 
     @PostMapping("/players")
-    public Player savePlayer(@RequestBody Player player) throws Exception {
+    public PlayerDto savePlayer(@RequestBody PlayerDto player) throws Exception {
         try {
             return playerService.savePlayer(player);
         } catch (Exception e) {
@@ -42,7 +43,7 @@ public class PlayerController {
     }
 
     @PutMapping("/players/{id}")
-    public Player updatePlayer(@PathVariable Long id, @RequestBody Player player) throws Exception {
+    public PlayerDto updatePlayer(@PathVariable Long id, @RequestBody PlayerDto player) throws Exception {
         try {
             return playerService.updatePlayer(id, player);
         } catch (Exception e) {

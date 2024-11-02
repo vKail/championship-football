@@ -1,5 +1,7 @@
 package com.adrian.champlonshipfootball.model;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,7 +27,7 @@ public class Match {
 //    @JoinColumn(name = "users_id", referencedColumnName = "users_id", nullable = false)
 //    private Users usersId;
     @Column(name = "date", nullable = false)
-    private Date matchDate;
+    private LocalDate matchDate;
     @Column(name = "result")
     private String result;
     @Column(name = "status")
@@ -33,7 +35,7 @@ public class Match {
 
     public Match() {}
 
-    public Match(long matchId, Team homeTeam, Team awayTeam, Category category, Date matchDate, String result, String status, Season season) {
+    public Match(long matchId, Team homeTeam, Team awayTeam, Category category, LocalDate matchDate, String result, String status, Season season) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -76,11 +78,11 @@ public class Match {
         this.category = category;
     }
 
-    public Date getMatchDate() {
+    public LocalDate getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(Date matchDate) {
+    public void setMatchDate(LocalDate matchDate) {
         this.matchDate = matchDate;
     }
 

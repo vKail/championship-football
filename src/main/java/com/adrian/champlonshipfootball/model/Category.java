@@ -16,6 +16,11 @@ public class Category {
     private String categoryName;
     @ManyToMany(mappedBy = "categories")
     private Set<Team> teams = new HashSet<>();
+    @Column(name = "age_min")
+    private int ageMin;
+
+    @Column(name = "age_max")
+    private int ageMax;
     public Category() {}
 
     public Category(long categoryId, String categoryName) {
@@ -38,4 +43,30 @@ public class Category {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    public Set<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Set<Team> teams) {
+        this.teams = teams;
+    }
+
+    public Integer getAgeMin() {
+        return ageMin;
+    }
+
+    public void setAgeMin(Integer ageMin) {
+        this.ageMin = ageMin;
+    }
+
+    public int getAgeMax() {
+        return ageMax;
+    }
+
+    public void setAgeMax(Integer ageMax) {
+        this.ageMax = ageMax;
+    }
+
+
 }

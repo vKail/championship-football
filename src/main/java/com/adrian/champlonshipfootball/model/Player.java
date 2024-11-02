@@ -1,10 +1,14 @@
 package com.adrian.champlonshipfootball.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "Player")
-public class Player {
+public class    Player {
     @Id
     @GeneratedValue
     @Column(name = "player_id", nullable = false)
@@ -15,11 +19,16 @@ public class Player {
     private String firstname;
     @Column(name = "lastname", nullable = false)
     private String lastname;
+    @Column(name = "birthdate", nullable = false)
+    private LocalDate birthdate;
     @Column(name = "bib", nullable = false)
     private String bib;
     @ManyToOne
     @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
     private Team team;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
+    private Category category;
 
     public Player() {}
 
@@ -78,5 +87,21 @@ public class Player {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

@@ -8,7 +8,7 @@ public class Leaderboard {
     @Id
     @GeneratedValue
     @Column(name = "leaderboard_id", nullable = false)
-    private int leaderboardId;
+    private long leaderboardId;
     @ManyToOne
     @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
     private Team team;
@@ -39,11 +39,11 @@ public class Leaderboard {
         this.goalsScored = goalsScored;
     }
 
-    public int getLeaderboardId() {
+    public long getLeaderboardId() {
         return leaderboardId;
     }
 
-    public void setLeaderboardId(int leaderboardId) {
+    public void setLeaderboardId(long leaderboardId) {
         this.leaderboardId = leaderboardId;
     }
 

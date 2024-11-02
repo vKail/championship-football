@@ -1,7 +1,10 @@
 package com.adrian.champlonshipfootball.service;
 
+import com.adrian.champlonshipfootball.dtos.GoalDto;
+import com.adrian.champlonshipfootball.dtos.MatchDto;
 import com.adrian.champlonshipfootball.model.Goal;
-import com.adrian.champlonshipfootball.model.Match;
+import com.adrian.champlonshipfootball.model.Leaderboard;
+import com.adrian.champlonshipfootball.repository.GoalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,37 +13,42 @@ import java.util.List;
 public class MatchResultService {
     private final MatchService matchService;
     private final LeaderboardService leaderboardService;
+    private final GoalRepository goalRepository;
 
-    public MatchResultService(MatchService matchService, LeaderboardService leaderboardService) {
+    public MatchResultService(MatchService matchService, LeaderboardService leaderboardService,
+                              GoalRepository goalRepository) {
         this.matchService = matchService;
         this.leaderboardService = leaderboardService;
+        this.goalRepository = goalRepository;
     }
 
     public String updateResultAndLeaderboard(long matchId) {
-        Match match = matchService.findMatchById(matchId);
-        if (match == null || !match.getStatus().equals("Finalizado")) {
+
+        MatchDto matchDto = matchService.findMatchById(matchId);
+        if (matchDto == null || !"Finalizado".equals(matchDto.getStatus())) {
             System.out.println("Match not finished");
             return null;
         }
 
-        List<Goal> goals = matchService.getGoalsForMatch(match);
-        String result = calculateMatchResult(goals, match);
-        match.setResult(result);
+        List<GoalDto> goals = matchService.getGoalsForMatch(matchDto);
+        String result = calculateMatchResult(goals, matchDto);
+        matchDto.setResult(result);
 
-        matchService.saveMatch(match);
-        leaderboardService.updateLeaderboardAfterMatch(match);
-        return "Puntaje actualizado".concat(match.getHomeTeam().toString()).concat(" - ").concat(match.getAwayTeam().toString()
-                .concat(" ").concat(result));
+        matchService.saveMatch(matchDto);
+        leaderboardService.updateLeaderboardAfterMatch(matchDto);
+
+        return "Puntaje actualizado para " + matchDto.getHomeTeam() + " - " + matchDto.getAwayTeam() + " con resultado " + result;
     }
 
-    private String calculateMatchResult(List<Goal> goals, Match match) {
+    // Método para calcular el resultado basado en los goles
+    private String calculateMatchResult(List<GoalDto> goals, MatchDto matchDto) {
         int homeGoals = 0;
         int awayGoals = 0;
 
-        for (Goal goal : goals) {
-            if (goal.getTeam().equals(match.getHomeTeam())) {
+        for (GoalDto goal : goals) {
+            if (goal.getTeamId() == matchDto.getHomeTeam()) {
                 homeGoals++;
-            } else if (goal.getTeam().equals(match.getAwayTeam())) {
+            } else if (goal.getTeamId() == matchDto.getAwayTeam()) {
                 awayGoals++;
             }
         }
@@ -48,3 +56,4 @@ public class MatchResultService {
         return homeGoals + " - " + awayGoals;
     }
 }
+

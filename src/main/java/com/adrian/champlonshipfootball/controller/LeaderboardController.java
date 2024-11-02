@@ -1,5 +1,6 @@
 package com.adrian.champlonshipfootball.controller;
 
+import com.adrian.champlonshipfootball.dtos.LeaderboardDto;
 import com.adrian.champlonshipfootball.model.Leaderboard;
 import com.adrian.champlonshipfootball.model.Match;
 import com.adrian.champlonshipfootball.model.Season;
@@ -20,7 +21,7 @@ public class LeaderboardController {
     }
 
     @GetMapping("/leaderboard")
-    public List<Leaderboard> getLeaderboard() throws Exception {
+    public List<LeaderboardDto> getLeaderboard() throws Exception {
         try {
             return leaderboardService.findAllLeaderboards();
         } catch (Exception e) {
@@ -29,7 +30,7 @@ public class LeaderboardController {
     }
 
     @GetMapping("/leaderboard/{id}")
-    public Leaderboard getLeaderboardById(@PathVariable Long id) throws Exception {
+    public LeaderboardDto getLeaderboardById(@PathVariable Long id) throws Exception {
         try {
             return leaderboardService.findLeaderboardById(id);
         } catch (Exception e) {
@@ -38,7 +39,7 @@ public class LeaderboardController {
     }
 
     @PostMapping("/leaderboard")
-    public Leaderboard saveLeaderboard(@RequestBody Leaderboard leaderboard) throws Exception {
+    public LeaderboardDto saveLeaderboard(@RequestBody LeaderboardDto leaderboard) throws Exception {
         try {
             return leaderboardService.saveLeaderboard(leaderboard);
         } catch (Exception e) {

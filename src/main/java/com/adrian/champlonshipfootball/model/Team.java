@@ -12,12 +12,12 @@ import java.util.Set;
 public class Team {
     @Id
     @GeneratedValue
-    @Column(name = "team_id")
+    @Column(name = "team_id" , nullable = false)
     private long teamId;
-    @Column(name = "name")
+    @Column(name = "name" , nullable = false)
     private String name;
     @JsonManagedReference
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team" )
     private Set<Player> player;
 //    @OneToOne
 //    @JoinColumn(name = "dt_id", referencedColumnName = "dt_id", nullable = false)

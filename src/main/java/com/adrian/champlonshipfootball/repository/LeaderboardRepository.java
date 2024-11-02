@@ -7,6 +7,6 @@ import org.hibernate.annotations.processing.SQL;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LeaderboardRepository extends JpaRepository<Leaderboard, Long> {
-    Leaderboard findByTeamAndSeason(Team team, Season season);
+    Leaderboard findByTeamTeamIdAndSeasonSeasonId(long team, long season);
 
 }

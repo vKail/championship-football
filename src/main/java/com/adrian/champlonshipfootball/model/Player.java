@@ -23,10 +23,12 @@ public class    Player {
     private LocalDate birthdate;
     @Column(name = "bib", nullable = false)
     private String bib;
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
     private Team team;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
+    private Category category;
 
     public Player() {}
 
@@ -93,5 +95,13 @@ public class    Player {
 
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

@@ -15,6 +15,9 @@ public class Leaderboard {
     @ManyToOne
     @JoinColumn(name = "season_id", referencedColumnName = "season_id", nullable = false)
     private Season season;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
+    private Category category;
     @Column
     private int points;
     @Column(name = "matches_won")
@@ -27,16 +30,6 @@ public class Leaderboard {
     private int goalsScored;
 
     public Leaderboard() {
-    }
-
-    public Leaderboard(Team team, Season season, int points, int matchesWon, int matchesLost, int matchesDrawn, int goalsScored) {
-        this.team = team;
-        this.season = season;
-        this.points = points;
-        this.matchesWon = matchesWon;
-        this.matchesLost = matchesLost;
-        this.matchesDrawn = matchesDrawn;
-        this.goalsScored = goalsScored;
     }
 
     public long getLeaderboardId() {
@@ -101,5 +94,13 @@ public class Leaderboard {
 
     public void setGoalsScored(int goalsScored) {
         this.goalsScored = goalsScored;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

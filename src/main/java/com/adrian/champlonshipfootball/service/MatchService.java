@@ -63,14 +63,13 @@ public class MatchService {
     // Conversión de DTO a Entidad
     private Match convertToEntity(MatchDto matchDto) {
         Match match = new Match();
-        match.setMatchId(matchDto.getMatchId());
         match.setMatchDate(matchDto.getMatchDate());
         match.setResult(matchDto.getResult());
         match.setStatus(matchDto.getStatus());
 
-        Team homeTeam = teamRepository.findById(matchDto.getHomeTeam())
-                .orElseThrow(() -> new RuntimeException("Home Team not found"));
-        Team awayTeam = teamRepository.findById(matchDto.getAwayTeam())
+        Team homeTeam = teamRepository.findById(matchDto.getHomeTeamId())
+                .orElseThrow(() -> new RuntimeException("Home Team not found".concat(String.valueOf(matchDto.getHomeTeamId()))));
+        Team awayTeam = teamRepository.findById(matchDto.getAwayTeamId())
                 .orElseThrow(() -> new RuntimeException("Away Team not found"));
         match.setHomeTeam(homeTeam);
         match.setAwayTeam(awayTeam);
@@ -94,8 +93,10 @@ public class MatchService {
         matchDto.setResult(match.getResult());
         matchDto.setStatus(match.getStatus());
 
-        matchDto.setHomeTeam(match.getHomeTeam().getTeamId());
-        matchDto.setAwayTeam(match.getAwayTeam().getTeamId());
+        matchDto.setHomeTeamId(match.getHomeTeam().getTeamId());
+        matchDto.setHomeTeamName(match.getHomeTeam().getName());
+        matchDto.setAwayTeamId(match.getAwayTeam().getTeamId());
+        matchDto.setAwayTeamName(match.getAwayTeam().getName());
         matchDto.setCategory(match.getCategory().getCategoryId());
         matchDto.setSeason(match.getSeason().getSeasonId());
 

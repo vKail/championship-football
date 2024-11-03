@@ -6,6 +6,8 @@ public class LeaderboardDto {
     private String teamName;
     private long seasonId;
     private String seasonName;
+    private long categoryId;
+    private String categoryName;
     private int points;
     private int matchesWon;
     private int matchesLost;
@@ -93,5 +95,21 @@ public class LeaderboardDto {
 
     public void setGoalsScored(int goalsScored) {
         this.goalsScored = goalsScored;
+    }
+
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

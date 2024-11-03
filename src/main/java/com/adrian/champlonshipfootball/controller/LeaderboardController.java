@@ -1,9 +1,6 @@
 package com.adrian.champlonshipfootball.controller;
 
 import com.adrian.champlonshipfootball.dtos.LeaderboardDto;
-import com.adrian.champlonshipfootball.model.Leaderboard;
-import com.adrian.champlonshipfootball.model.Match;
-import com.adrian.champlonshipfootball.model.Season;
 import com.adrian.champlonshipfootball.service.LeaderboardService;
 import com.adrian.champlonshipfootball.service.MatchResultService;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +17,7 @@ public class LeaderboardController {
         this.matchResultService = matchResultService;
     }
 
-    @GetMapping("/leaderboard")
+    @GetMapping("/leaderboards")
     public List<LeaderboardDto> getLeaderboard() throws Exception {
         try {
             return leaderboardService.findAllLeaderboards();
@@ -29,7 +26,7 @@ public class LeaderboardController {
         }
     }
 
-    @GetMapping("/leaderboard/{id}")
+    @GetMapping("/leaderboards/{id}")
     public LeaderboardDto getLeaderboardById(@PathVariable Long id) throws Exception {
         try {
             return leaderboardService.findLeaderboardById(id);
@@ -38,7 +35,16 @@ public class LeaderboardController {
         }
     }
 
-    @PostMapping("/leaderboard")
+    @GetMapping("/leaderboards/season/{seasonId}/category/{categoryId}")
+    public List<LeaderboardDto> getLeaderboardBySeasonAndCategory(@PathVariable Long seasonId, @PathVariable Long categoryId) throws Exception {
+        try {
+            return leaderboardService.findByCategoryAndSeason(seasonId, categoryId);
+        } catch (Exception e) {
+            throw new Exception("Error: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/leaderboards")
     public LeaderboardDto saveLeaderboard(@RequestBody LeaderboardDto leaderboard) throws Exception {
         try {
             return leaderboardService.saveLeaderboard(leaderboard);
@@ -56,7 +62,7 @@ public class LeaderboardController {
         }
     }
 
-    @DeleteMapping("/leaderboard/{id}")
+    @DeleteMapping("/leaderboards/{id}")
     public void deleteLeaderboard(@PathVariable Long id) throws Exception {
         try {
             leaderboardService.deleteLeaderboard(id);

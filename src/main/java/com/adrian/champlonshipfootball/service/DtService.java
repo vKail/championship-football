@@ -71,7 +71,9 @@ public class DtService {
         if (dtDto.getTeamId() != null) {
             Team team = teamRepository.findById(dtDto.getTeamId()).
                     orElseThrow(() -> new RuntimeException("Team not found"));
+            dt.setTeam(team);
         }
+
         return dt;
     }
 

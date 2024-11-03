@@ -5,8 +5,10 @@ import java.util.Date;
 
 public class MatchDto {
     private long matchId;
-    private long homeTeam;
-    private long awayTeam;
+    private long homeTeamId;
+    private String homeTeamName;
+    private long awayTeamId;
+    private String awayTeamName;
     private long category;
     private long season;
     private LocalDate matchDate;
@@ -24,20 +26,36 @@ public class MatchDto {
         this.matchId = matchId;
     }
 
-    public long getHomeTeam() {
-        return homeTeam;
+    public long getHomeTeamId() {
+        return homeTeamId;
     }
 
-    public void setHomeTeam(long homeTeam) {
-        this.homeTeam = homeTeam;
+    public void setHomeTeamId(long homeTeamId) {
+        this.homeTeamId = homeTeamId;
     }
 
-    public long getAwayTeam() {
-        return awayTeam;
+    public String getHomeTeamName() {
+        return homeTeamName;
     }
 
-    public void setAwayTeam(long awayTeam) {
-        this.awayTeam = awayTeam;
+    public void setHomeTeamName(String homeTeamName) {
+        this.homeTeamName = homeTeamName;
+    }
+
+    public long getAwayTeamId() {
+        return awayTeamId;
+    }
+
+    public void setAwayTeamId(long awayTeamId) {
+        this.awayTeamId = awayTeamId;
+    }
+
+    public String getAwayTeamName() {
+        return awayTeamName;
+    }
+
+    public void setAwayTeamName(String awayTeamName) {
+        this.awayTeamName = awayTeamName;
     }
 
     public long getCategory() {

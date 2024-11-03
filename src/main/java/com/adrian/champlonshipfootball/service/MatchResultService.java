@@ -37,7 +37,7 @@ public class MatchResultService {
         matchService.saveMatch(matchDto);
         leaderboardService.updateLeaderboardAfterMatch(matchDto);
 
-        return "Puntaje actualizado para " + matchDto.getHomeTeam() + " - " + matchDto.getAwayTeam() + " con resultado " + result;
+        return "Puntaje actualizado para " + matchDto.getHomeTeamName() + " - " + matchDto.getAwayTeamName() + " con resultado " + result;
     }
 
     // Método para calcular el resultado basado en los goles
@@ -46,9 +46,9 @@ public class MatchResultService {
         int awayGoals = 0;
 
         for (GoalDto goal : goals) {
-            if (goal.getTeamId() == matchDto.getHomeTeam()) {
+            if (goal.getTeamId() == matchDto.getHomeTeamId()) {
                 homeGoals++;
-            } else if (goal.getTeamId() == matchDto.getAwayTeam()) {
+            } else if (goal.getTeamId() == matchDto.getAwayTeamId()) {
                 awayGoals++;
             }
         }

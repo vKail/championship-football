@@ -19,9 +19,6 @@ public class Team {
     @JsonManagedReference
     @OneToMany(mappedBy = "team" )
     private Set<Player> player;
-//    @OneToOne
-//    @JoinColumn(name = "dt_id", referencedColumnName = "dt_id", nullable = false)
-//    private Dt dt;
     @ManyToMany
     @JoinTable(
             name = "team_categories",

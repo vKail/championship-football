@@ -2,15 +2,8 @@ package com.adrian.champlonshipfootball.service;
 
 import com.adrian.champlonshipfootball.dtos.LeaderboardDto;
 import com.adrian.champlonshipfootball.dtos.MatchDto;
-import com.adrian.champlonshipfootball.dtos.TeamDto;
-import com.adrian.champlonshipfootball.model.Leaderboard;
-import com.adrian.champlonshipfootball.model.Match;
-import com.adrian.champlonshipfootball.model.Season;
-import com.adrian.champlonshipfootball.model.Team;
-import com.adrian.champlonshipfootball.repository.LeaderboardRepository;
-import com.adrian.champlonshipfootball.repository.MatchRepository;
-import com.adrian.champlonshipfootball.repository.SeasonRepository;
-import com.adrian.champlonshipfootball.repository.TeamRepository;
+import com.adrian.champlonshipfootball.model.*;
+import com.adrian.champlonshipfootball.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +19,10 @@ public class LeaderboardService {
     private final MatchService matchService;
     private final TeamService teamService;
     private final SeasonService seasonService;
+    private final CategoryRepository categoryRepository;
 
     public LeaderboardService(LeaderboardRepository leaderboardRepository, MatchRepository matchRepository,
-                              TeamRepository teamRepository, SeasonRepository seasonRepository, MatchService matchService, TeamService teamService, SeasonService seasonService) {
+                              TeamRepository teamRepository, SeasonRepository seasonRepository, MatchService matchService, TeamService teamService, SeasonService seasonService, CategoryRepository categoryRepository) {
         this.leaderboardRepository = leaderboardRepository;
         this.matchRepository = matchRepository;
         this.teamRepository = teamRepository;
@@ -36,11 +30,12 @@ public class LeaderboardService {
         this.matchService = matchService;
         this.teamService = teamService;
         this.seasonService = seasonService;
+        this.categoryRepository = categoryRepository;
     }
 
     public void updateLeaderboardAfterMatch(MatchDto match) {
-        Leaderboard homeTeamLeaderboard = findByTeamAndSeason(match.getHomeTeam(), match.getSeason());
-        Leaderboard awayTeamLeaderboard = findByTeamAndSeason(match.getAwayTeam(), match.getSeason());
+        Leaderboard homeTeamLeaderboard = findByTeamAndSeason(match.getHomeTeamId(), match.getSeason());
+        Leaderboard awayTeamLeaderboard = findByTeamAndSeason(match.getAwayTeamId(), match.getSeason());
 
         String[] result = match.getResult().split(" - ");
         int homeGoals = Integer.parseInt(result[0]);
@@ -90,6 +85,13 @@ public class LeaderboardService {
         return leaderboardRepository.findByTeamTeamIdAndSeasonSeasonId(team, season);
     }
 
+    public List<LeaderboardDto> findByCategoryAndSeason(long category, long season){
+        return leaderboardRepository.findLeaderboardsByCategoryCategoryIdAndSeasonSeasonIdOrderByPoints(category, season)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
 
     private LeaderboardDto convertToDTO(Leaderboard leaderboard) {
         LeaderboardDto dto = new LeaderboardDto();
@@ -103,6 +105,8 @@ public class LeaderboardService {
         dto.setMatchesLost(leaderboard.getMatchesLost());
         dto.setMatchesDrawn(leaderboard.getMatchesDrawn());
         dto.setGoalsScored(leaderboard.getGoalsScored());
+        dto.setCategoryId(leaderboard.getCategory().getCategoryId());
+        dto.setCategoryName(leaderboard.getCategory().getCategoryName());
         return dto;
     }
 
@@ -113,6 +117,9 @@ public class LeaderboardService {
                 .orElseThrow(() -> new RuntimeException("Team not found"));
         Season season = seasonRepository.findById(dto.getSeasonId())
                 .orElseThrow(() -> new RuntimeException("Season not found"));
+        Category category = categoryRepository.findById(dto.getCategoryId())
+                        .orElseThrow(() -> new RuntimeException("Category not found"));
+        leaderboard.setCategory(category);
         leaderboard.setTeam(team);
         leaderboard.setSeason(season);
         leaderboard.setPoints(dto.getPoints());

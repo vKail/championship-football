@@ -34,7 +34,7 @@ public class MatchResultService {
         String result = calculateMatchResult(goals, matchDto);
         matchDto.setResult(result);
 
-        matchService.saveMatch(matchDto);
+        matchService.updateMatch(matchDto);
         leaderboardService.updateLeaderboardAfterMatch(matchDto);
 
         return "Puntaje actualizado para " + matchDto.getHomeTeamName() + " - " + matchDto.getAwayTeamName() + " con resultado " + result;

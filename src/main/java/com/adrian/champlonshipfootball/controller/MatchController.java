@@ -53,7 +53,7 @@ public class MatchController {
             String status = body.get("status");
             matchService.updateMatchStatus(id, status);
 
-            if ("Finalizado".equals(status)) {
+            if (status.equalsIgnoreCase("Finalizado")) {
                 matchResultService.updateResultAndLeaderboard(id);
             }
             return "Match status updated";

@@ -56,6 +56,17 @@ public class MatchService {
         return convertToDTO(updatedMatch);
     }
 
+    public MatchDto updateMatch(MatchDto matchDto) {
+        Match existingMatch = matchRepository.findById(matchDto.getMatchId())
+                .orElseThrow(() -> new RuntimeException("Match not found"));
+
+        existingMatch.setResult(matchDto.getResult());
+        existingMatch.setStatus(matchDto.getStatus());
+
+        Match updatedMatch = matchRepository.save(existingMatch);
+        return convertToDTO(updatedMatch);
+    }
+
     public void deleteMatchById(long id) {
         matchRepository.deleteById(id);
     }

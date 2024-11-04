@@ -85,7 +85,7 @@ public class LeaderboardService {
         return leaderboardRepository.findByTeamTeamIdAndSeasonSeasonId(team, season);
     }
 
-    public List<LeaderboardDto> findByCategoryAndSeason(long category, long season){
+    public List<LeaderboardDto> findByCategoryAndSeason(long season, long category) {
         return leaderboardRepository.findLeaderboardsByCategoryCategoryIdAndSeasonSeasonIdOrderByPoints(category, season)
                 .stream()
                 .map(this::convertToDTO)

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface LeaderboardRepository extends JpaRepository<Leaderboard, Long> {
     Leaderboard findByTeamTeamIdAndSeasonSeasonId(long team, long season);
-    List<Leaderboard> findLeaderboardsByCategoryCategoryIdAndSeasonSeasonIdOrderByPoints(long category, long season);
+    List<Leaderboard> findLeaderboardsByCategoryCategoryIdAndSeasonSeasonIdOrderByPointsDesc(long category, long season);
 
 
 }
